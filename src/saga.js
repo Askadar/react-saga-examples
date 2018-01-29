@@ -7,7 +7,7 @@ const apiCall = async (text) => {
 			sentence: "You will learn how to use sagas!"
 		},
 		headers: {
-			'X-Mashape-Key': 'DPHo0ldO0cmshraPZ5DwFk71cDKxp1Zoeg3jsnpWGpchLsCPFY',
+			'X-Mashape-Key': '#',
 			"Accept": "text/plain"
 		}
 	})
