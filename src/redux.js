@@ -1,21 +1,30 @@
 const initialState = {
     quote: '',
     appState: 'init',
-    reqText: ''
+    reqText: '',
+    typing: false
 }
 
 export const types = {
     'textUpdate': 'RequestTextUpdated@Front',
     'request': 'QuoteFetchRequest@Front',
+    // 'typingStarted': 'TypingStarted@Front',
+    'typingStopped': 'TypingStopped@Front',
     'success': 'QuoteFetchSucceeded@Saga',
     'fail': 'QuoteFetchFailed@Saga',
+    'typingStart': 'TypingStart@Saga',
+    'typingEnd': 'TypingStop@Saga',
     'spellchecked': 'QuoteSpellcheckSucceeded@Saga',
     'statusChange': 'AppLoadingStatusChanged@Saga',
 }
-const { textUpdate, success, fail, spellchecked, statusChange } = types;
+const { textUpdate, success, fail, spellchecked, statusChange, typingStart, typingEnd } = types;
 
 export default (state = initialState, action) => {
     switch (action.type) {
+        case typingStart:
+        return {...state, typing: true};
+        case typingEnd:
+        return {...state, typing: false};
         case statusChange:
         return { ...state, appState: action.newState };
         case textUpdate:

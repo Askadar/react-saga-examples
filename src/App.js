@@ -9,8 +9,8 @@ import './App.css';
 class App extends Component {
   render() {
       const {
-          request, requestTextUpdated,
-          quote, appState, reqText, spellingErrors, correctedQuote
+          request, requestTextUpdated, typingStarted, typingStopped,
+          quote, appState, reqText, spellingErrors, correctedQuote, typing,
       } = this.props;
     return (
       <div className="App">
@@ -25,7 +25,11 @@ class App extends Component {
           {quote.length > 0 ? quote : `We're ready for Yoda senpai to speak`}
         </p>
         <div>
-        <input type="text" value={reqText} onChange={(e) => requestTextUpdated(e.target.value)}/>
+        <input type="text" value={reqText} onChange={(e) => { requestTextUpdated(e.target.value); }}/>
+        {typing ? <img src={logo} className="App-logo" alt="logo" style={
+            typing ?
+            {animationDuration: '1s', animationDirection: 'reverse'} :
+            {}} /> : null}
         <button onClick={() => request({reqText})}>Request him now!</button>
         </div>
         {spellingErrors > 0 ? <div>
@@ -42,6 +46,8 @@ export default connect(
         request({reqText, ...params}) {
             dispatch({type: types.request, text: reqText, ...params})
         },
-        requestTextUpdated(text) { dispatch({type: types.textUpdate, text})}
+        requestTextUpdated(text) { dispatch({type: types.textUpdate, text})},
+        typingStarted: () => dispatch({type: types.typingStarted}),
+        typingStopped: () => dispatch({type: types.typingStopped}),
     })
 )(App);
